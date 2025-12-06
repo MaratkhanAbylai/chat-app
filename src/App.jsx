@@ -1,14 +1,22 @@
 import { useState } from 'react'
-import './App.css'
+import Authorization from './components/Authorization'
+import Login from './components/Login/Login'
+import Register from './components/Register/Register'
+import './App.modules.css'
 
 function App() {
-    
+
+  const [screen, setScreen] = useState('auth');
 
   return (
     <>
-      
+      <div className="container">
+        {screen === "auth" && <Authorization setScreen={setScreen} />}
+        {screen === "login" && <Login setScreen={setScreen}/>}
+        {screen === "register" && <Register setScreen={setScreen} />}
+      </div>
     </>
   )
 }
 
-export default App
+export default App;

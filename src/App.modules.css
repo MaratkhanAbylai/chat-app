@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.authorization-block {
+    display: flex;
+    gap: 1vw;
+}
+
+.authorization-block .block {
+    display: flex;
+    gap: 1vw;
+}
