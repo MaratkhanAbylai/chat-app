@@ -5,23 +5,41 @@ function Login({ setScreen }) {
     
     const [nameValue, setNameValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
+    const [loading, setLoading] = useState(false);
 
     async function handleClick() {
-        const data = {
-            username: nameValue,
-            password: passwordValue
+        try {
+
+            setLoading(true);
+
+            const data = {
+                username: nameValue,
+                password: passwordValue
+            }
+
+            const response = await fetch('link to bd', {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if(result.status === "error") {
+                alert(result.message);
+                return;
+            }
+
+            alert("Успешный вход!");
+            setNameValue('');
+            setPasswordValue('');
+        } catch {
+            alert("Ошибка сети");
+        } finally {
+            setLoading(false);
         }
-
-        const response = await fetch('link to bd', {
-            method: 'POST',
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        setNameValue('');
-        setPasswordValue('');
     }
 
     function changeComponent() {
@@ -40,7 +58,7 @@ function Login({ setScreen }) {
              onChange={e => setPasswordValue(e.target.value)}
              placeholder="Введите пароль"
             />
-            <button type="submit" onClick={handleClick}>Войти</button>
+            <button disabled={loading} type="submit" onClick={handleClick}>{loading ? "Попытка входа..." : "Войти"}</button>
             <p>или</p>
             <button onClick={changeComponent}>Зарегистрироваться</button>
         </div>

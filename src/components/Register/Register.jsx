@@ -5,6 +5,7 @@ function Register({ setScreen }) {
     const [login, setLogin] = useState('');
     const [passwordFirst, setPasswordFirst] = useState('');
     const [passwordSecond, setPasswordSecond] = useState('');
+    const [loading, setLoading] = useState(false);
 
     async function handleClick() {
         if(passwordFirst !== passwordSecond) {
@@ -14,22 +15,38 @@ function Register({ setScreen }) {
             return;
         }
 
-        const data = {
-            username: login,
-            password: passwordFirst
+        try {
+
+            setLoading(true);
+
+            const data = {
+                username: login,
+                password: passwordFirst
+            }
+
+            const response = await fetch("link to bd", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = response.json();
+
+            if(result.status === "error") {
+                alert(result.message);
+            }
+
+            alert("Успех");
+            setLogin('');
+            setPasswordFirst('');
+            setPasswordSecond('');
+        } catch {
+            alert("Ошибка");
+        } finally {
+            setLoading(false);
         }
-
-        const response = await fetch("link to bd", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        setLogin('');
-        setPasswordFirst('');
-        setPasswordSecond('');
     }
 
     function changeComponent() {
@@ -54,7 +71,7 @@ function Register({ setScreen }) {
              onChange={e => setPasswordSecond(e.target.value)}
              placeholder="Повторите пароль"
             />
-            <button type="submit" onClick={handleClick}>Зарегистрироваться</button>
+            <button type="submit" onClick={handleClick} disabled={loading}>{loading ? "Попытка регистрации..." : "Зарегистрироваться"}</button>
             <p>или</p>
             <button onClick={changeComponent}>Войти</button>
         </div>
