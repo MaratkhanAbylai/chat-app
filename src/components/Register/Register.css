@@ -1,0 +1,182 @@
+/* ===== Центральная обёртка ===== */
+.register-wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d0d0d; /* тёмный фон, как ChatGPT */
+    padding: 20px;
+    box-sizing: border-box;
+    color: #e5e7eb;
+    font-family: "Inter", system-ui, sans-serif;
+}
+
+/* ===== Карточка ===== */
+.register-card {
+    width: 100%;
+    max-width: 420px;
+    background: #1a1a1a;
+    padding: 32px 28px;
+    border-radius: 14px;
+    box-shadow:
+        0 12px 38px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+    animation: fadeIn 0.35s ease;
+}
+
+/* Плавное появление */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Заголовки ===== */
+.register-title {
+    margin: 0;
+    padding: 0;
+    font-size: 26px;
+    text-align: center;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.register-subtitle {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 6px;
+    margin-bottom: 26px;
+    color: #aaaaaa;
+}
+
+/* ===== Форма ===== */
+.Register {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ===== Поля ввода ===== */
+.Register input[type="text"],
+.Register input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #3a3a3a;
+    background: #111;
+    font-size: 15px;
+    color: #e5e7eb;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.05s ease;
+}
+
+.Register input::placeholder {
+    color: #6b6b6b;
+}
+
+.Register input:focus {
+    border-color: #10a37f;
+    background: #151515;
+    box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.25);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* ===== Primary кнопка ===== */
+.Register button[type="submit"],
+.Register button:first-of-type {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: none;
+    background: #10a37f; /* фирменный зелёный ChatGPT */
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.08s ease,
+        box-shadow 0.2s ease;
+}
+
+.Register button:first-of-type:hover:not(:disabled) {
+    background: #0e8a6c;
+    box-shadow: 0 8px 22px rgba(16, 163, 127, 0.35);
+    transform: translateY(-2px);
+}
+
+.Register button:first-of-type:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* Disabled */
+.Register button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* ===== Разделитель ===== */
+.Register p {
+    text-align: center;
+    margin: 6px 0;
+    font-size: 13px;
+    color: #7d7d7d;
+    position: relative;
+}
+
+.Register p::before,
+.Register p::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255,255,255,0.15),
+        transparent
+    );
+}
+
+.Register p::before { left: 0; }
+.Register p::after  { right: 0; }
+
+/* ===== Secondary кнопка ===== */
+.Register button:last-of-type {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #3d3d3d;
+    background: #111;
+    color: #e5e7eb;
+    font-size: 15px;
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.08s ease;
+}
+
+.Register button:last-of-type:hover {
+    background: #1c1c1c;
+    border-color: #5f5f5f;
+    transform: translateY(-1px);
+}
+
+.Register button:last-of-type:active {
+    transform: translateY(0);
+}
+
+/* ===== Подписи ===== */
+.register-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #dddddd;
+}

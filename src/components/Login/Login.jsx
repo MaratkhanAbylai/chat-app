@@ -17,7 +17,7 @@ function Login({ setScreen }) {
                 password: passwordValue
             }
 
-            const response = await fetch('link to bd', {
+            const response = await fetch('http://192.168.43.47/chatapp/login.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
