@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './Main.css'
-import Chats from './contentsComponents/Chats/Chats';
+import Chats from './contentComponents/Chats/Chats'
 
 function Main() {
 

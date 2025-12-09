@@ -1,0 +1,31 @@
+.chats-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100vw;
+}
+
+h1 {
+    color: #fff;
+}
+
+.companions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.companion-container {
+    color: #fff;
+    cursor: pointer;
+}
+
+.companion-container img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 1rem;
+}
