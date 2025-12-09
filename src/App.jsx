@@ -14,7 +14,7 @@ function App() {
         {screen === "auth" && <Authorization setScreen={setScreen} />}
         {screen === "login" && <Login setScreen={setScreen}/>}
         {screen === "register" && <Register setScreen={setScreen} />}
-      </div>
+      </div> 
     </>
   )
 }

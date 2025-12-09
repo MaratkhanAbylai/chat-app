@@ -32,7 +32,7 @@ function Register({ setScreen }) {
                 body: JSON.stringify(data)
             });
 
-            const result = response.json();
+            const result = await response.json();
 
             if(result.status === "error") {
                 alert(result.message);
