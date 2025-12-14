@@ -52,3 +52,7 @@ p.login {
     width: 90vw;
     height: 100vh;
 }
+
+.exit-btn {
+    color: #db0f00;
+}

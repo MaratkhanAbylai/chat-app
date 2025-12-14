@@ -33,6 +33,7 @@ function Login({ setScreen }) {
             }
 
             alert("Успешный вход!");
+            setScreen("main");
             setNameValue('');
             setPasswordValue('');
         } catch {

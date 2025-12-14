@@ -2,7 +2,8 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import './Chats.css'
 
-function Chats() {
+
+function Chats({ openChat }) {
 
     const[companions, setComponions] = useState([
         {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
@@ -25,7 +26,7 @@ function Chats() {
 
             <div className="companions">
                 {companions.map(companion => (
-                    <div className="companion-container" key={companion.id}>
+                    <div className="companion-container" key={companion.id} onClick={() => openChat(companion)}>
                         <img src={companion.link} alt="companion's avatar" />
                         <p className="companion-login">{companion.login}</p>
                         <p className="last-message">{companion.lastMessage.slice(0, 13)}...</p>

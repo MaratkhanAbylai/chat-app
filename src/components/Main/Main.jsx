@@ -1,13 +1,27 @@
 import { useState } from 'react'
 import './Main.css'
 import Chats from './contentComponents/Chats/Chats'
+import FriendsComponent from './contentComponents/Friends/FriendsComponent';
+import Search from './contentComponents/Search/Search';
+import ChatWindow from './contentComponents/ChatWindow/ChatWindow';
 
 function Main() {
 
     const [screen, setScreen] = useState('main');
+    const [activeChat, setActiveChat] = useState(false);
 
     function openChats() {
         setScreen('chats');
+    }
+
+    function openChat() {
+        setScreen('chat');
+        setActiveChat(true);
+    }
+
+    function back() {
+        setScreen('chats');
+        setActiveChat(false);
     }
 
     function openFriendList() {
@@ -29,16 +43,21 @@ function Main() {
 
                 <div className="sidebar-menu">
                     <ul>
-                        <li><button>Чаты</button></li>
-                        <li><button>Друзья</button></li>
-                        <li><button>Поиск</button></li>
+                        <li><button onClick={openChats}>Чаты</button></li>
+                        <li><button onClick={openFriendList}>Друзья</button></li>
+                        <li><button onClick={openSearch}>Поиск</button></li>
+                        <li><button className="exit-btn">Выйти</button></li>
                     </ul>
                 </div>
 
             </div>
 
             <div className="main">
-                <Chats />
+                {screen === "main" && <Chats />}
+                {screen === "chats" && <Chats />}
+                {screen === "friends" && <FriendsComponent />}
+                {screen === "search" && <Search />}
+                {screen === "chat" && <ChatWindow />}
             </div>
         </div>
     </>

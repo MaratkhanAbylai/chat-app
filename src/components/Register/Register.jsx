@@ -39,6 +39,7 @@ function Register({ setScreen }) {
             }
 
             alert("Успех");
+            setScreen("main");
             setLogin('');
             setPasswordFirst('');
             setPasswordSecond('');
