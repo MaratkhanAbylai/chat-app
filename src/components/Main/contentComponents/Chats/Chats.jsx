@@ -1,22 +1,17 @@
-import { useState } from "react";
-import { v4 as uuid } from "uuid";
+import { useState, useEffect } from "react";
 import './Chats.css'
 
 
 function Chats({ openChat }) {
 
-    const[companions, setComponions] = useState([
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtRQOe9JQO3bQetUJsweuxTH_v3pmtp3LVQ&s", login: "Колл Палмер", lastMessage: "Чтм фифа ойнаймыз ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtRQOe9JQO3bQetUJsweuxTH_v3pmtp3LVQ&s", login: "Колл Палмер", lastMessage: "Чтм фифа ойнаймыз ба?"},
-        {id: uuid(), link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOSwDsNUtqFc0oB0frWWNFaxlpBAz-LW06w&s", login: "Гарри Поттер", lastMessage: "Ана сабақтан ана лабканы жасадың ба?"}
-    ]);
+    const[companions, setComponions] = useState([]);
+
+    useEffect(() => {
+        fetch('link to db')
+        .then(res => res.json())
+        .then(data => setComponions(data))
+        .catch(err => console.error(err));
+    }, []);
 
     return <>
 
@@ -29,7 +24,7 @@ function Chats({ openChat }) {
                     <div className="companion-container" key={companion.id} onClick={() => openChat(companion)}>
                         <img src={companion.link} alt="companion's avatar" />
                         <p className="companion-login">{companion.login}</p>
-                        <p className="last-message">{companion.lastMessage.slice(0, 13)}...</p>
+                        <p className="last-message">{companion.lastMessage ? companion.lastMessage.slice(0, 13) + "..." : ""}</p>
                     </div>
                 ))}
             </div>

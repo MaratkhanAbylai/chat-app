@@ -7,29 +7,17 @@ import ChatWindow from './contentComponents/ChatWindow/ChatWindow';
 
 function Main() {
 
-    const [screen, setScreen] = useState('main');
-    const [activeChat, setActiveChat] = useState(false);
+    const [screen, setScreen] = useState('chats');
+    const [activeChat, setActiveChat] = useState(null);
 
-    function openChats() {
-        setScreen('chats');
-    }
-
-    function openChat() {
+    function openChat(companion) {
+        setActiveChat(companion);
         setScreen('chat');
-        setActiveChat(true);
     }
 
-    function back() {
+    function backToChats() {
+        setActiveChat(null);
         setScreen('chats');
-        setActiveChat(false);
-    }
-
-    function openFriendList() {
-        setScreen('friends');
-    }
-
-    function openSearch() {
-        setScreen('search');
     }
 
     return <>
@@ -43,9 +31,9 @@ function Main() {
 
                 <div className="sidebar-menu">
                     <ul>
-                        <li><button onClick={openChats}>Чаты</button></li>
-                        <li><button onClick={openFriendList}>Друзья</button></li>
-                        <li><button onClick={openSearch}>Поиск</button></li>
+                        <li><button onClick={() => setScreen('chats')}>Чаты</button></li>
+                        <li><button onClick={() => setScreen('friends')}>Друзья</button></li>
+                        <li><button onClick={() => setScreen('search')}>Поиск</button></li>
                         <li><button className="exit-btn">Выйти</button></li>
                     </ul>
                 </div>
@@ -53,11 +41,10 @@ function Main() {
             </div>
 
             <div className="main">
-                {screen === "main" && <Chats />}
-                {screen === "chats" && <Chats />}
+                {screen === "chats" && <Chats openChat={openChat} />}
                 {screen === "friends" && <FriendsComponent />}
                 {screen === "search" && <Search />}
-                {screen === "chat" && <ChatWindow />}
+                {screen === "chat" && (<ChatWindow companion={activeChat} back={backToChats} />)}
             </div>
         </div>
     </>
