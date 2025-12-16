@@ -12,11 +12,10 @@ function App() {
   return (
     <>
       <div className="container">
-        {/* {screen === "auth" && <Authorization setScreen={setScreen} />}
+        {screen === "auth" && <Authorization setScreen={setScreen} />}
         {screen === "login" && <Login setScreen={setScreen}/>}
         {screen === "register" && <Register setScreen={setScreen} />}
-        {screen === "main" && <Main />} */}
-        <Main />
+        {screen === "main" && <Main />}
       </div>
     </>
   )
