@@ -17,7 +17,7 @@ function Login({ setScreen }) {
                 password: passwordValue
             }
 
-            const response = await fetch('link to bd', {
+            const response = await fetch('http://localhost:8000/log.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
