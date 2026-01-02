@@ -24,7 +24,7 @@ function Register({ setScreen, setUser }) {
 
             setLoading(true);
             
-            const response = await fetch('/api/register', {
+            const response = await fetch('http://localhost:8000/log.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

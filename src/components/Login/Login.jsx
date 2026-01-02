@@ -17,7 +17,8 @@ function Login({ setScreen, setUser }) {
             
             setLoading(true);
 
-            const response = await fetch('/api/login', {
+            const response = await fetch('http://localhost:8000/log.php', {
+
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
