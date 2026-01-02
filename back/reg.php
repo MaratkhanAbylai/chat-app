@@ -8,17 +8,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-header("Content-Type: application/json");
+header("Content-Type: application/json; charset=utf-8");
 
 require_once "db.php";
 
 $input = json_decode(file_get_contents("php://input"), true);
 
 if (!isset($input['username'], $input['password'])) {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Некорректные данные"
-    ]);
+    echo json_encode(["status" => "error", "message" => "Некорректные данные"]);
     exit;
 }
 
@@ -26,44 +23,36 @@ $username = trim($input['username']);
 $password = $input['password'];
 
 if ($username === "" || $password === "") {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Логин и пароль обязательны"
-    ]);
+    echo json_encode(["status" => "error", "message" => "Логин и пароль обязательны"]);
     exit;
 }
 
-/* проверка: существует ли пользователь */
+/* проверка на существование */
 $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
 $stmt->execute([$username]);
 
 if ($stmt->fetch()) {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Пользователь уже существует"
-    ]);
+    echo json_encode(["status" => "error", "message" => "Пользователь уже существует"]);
     exit;
 }
 
-/* хеширование пароля */
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-/* вставка пользователя */
-$stmt = $pdo->prepare(
-    "INSERT INTO users (username, password) VALUES (?, ?)"
-);
+try {
+    $stmt = $pdo->prepare(
+        "INSERT INTO users (username, password) VALUES (?, ?)"
+    );
+    $stmt->execute([$username, $hashedPassword]);
 
-if ($stmt->execute([$username, $hashedPassword])) {
     echo json_encode([
         "status" => "success",
-        "message" => "Регистрация успешна"
+        "user_id" => $pdo->lastInsertId(),
+        "username" => $username
     ]);
-} else {
+} catch (PDOException $e) {
     echo json_encode([
         "status" => "error",
-        "message" => "Ошибка регистрации"
-        "user_id" => $user['id'],
-        "username" => $username
+        "message" => $e->getMessage()
     ]);
 }
 

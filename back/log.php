@@ -57,7 +57,7 @@ if (!password_verify($password, $user['password'])) {
 echo json_encode([
     "status" => "success",
     "message" => "Успешный вход",
-    "user_id" => $user['id']
+    "user_id" => $user['id'],
     "username"=>$username
 ]);
 
