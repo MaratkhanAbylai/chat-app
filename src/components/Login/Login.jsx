@@ -1,43 +1,53 @@
 import { useState } from "react"
-import './Login.modules.css'
+import './Login.css'
 
-function Login({ setScreen }) {
+function Login({ setScreen, setUser }) {
     
     const [nameValue, setNameValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
     const [loading, setLoading] = useState(false);
 
     async function handleClick() {
+        if(!nameValue || !passwordValue) {
+            alert("Введите логин и пароль");
+            return;
+        }
+        
         try {
-
+            
             setLoading(true);
 
-            const data = {
-                username: nameValue,
-                password: passwordValue
-            }
-
-            const response = await fetch('link to bd', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type' : 'application/json'
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    username: nameValue,
+                    password: passwordValue
+                })
             });
 
-            const result = await response.json();
+            const res = await response.json();
 
-            if(result.status === "error") {
-                alert(result.message);
+            if(!response.ok || res.status === 'error') {
+                alert(res.message || 'Ошибка входа');
                 return;
             }
 
-            alert("Успешный вход!");
-            setScreen("main");
-            setNameValue('');
-            setPasswordValue('');
-        } catch {
-            alert("Ошибка сети");
+            localStorage.setItem('token', res.token);
+
+            setUser({
+                login: res.username,
+                avatar: res.avatar,
+                token: res.token
+            });
+
+            setScreen('main');
+
+        } catch(err) {
+            console.error(err);
+            alert('Ошибка сети');
         } finally {
             setLoading(false);
         }

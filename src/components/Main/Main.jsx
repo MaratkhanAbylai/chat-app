@@ -5,7 +5,9 @@ import FriendsComponent from './contentComponents/Friends/FriendsComponent';
 import Search from './contentComponents/Search/Search';
 import ChatWindow from './contentComponents/ChatWindow/ChatWindow';
 
-function Main() {
+function Main({ user }) {
+
+    if(!user) return null;
 
     const [screen, setScreen] = useState('chats');
     const [activeChat, setActiveChat] = useState(null);
@@ -25,8 +27,8 @@ function Main() {
             <div className="sidebar">
                 
                 <div className="sidebar-user">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMwlOlY8FxygArpLxfTCoBzqfxDhaIco3ruA&s" alt="avatar" className='logo' />
-                    <p className='login'>User's Login</p>
+                    <img src={user.avatar || '/default-avatar.png'} alt="avatar" className='logo' />
+                    <p className='login'>{user.login}</p>
                 </div>
 
                 <div className="sidebar-menu">

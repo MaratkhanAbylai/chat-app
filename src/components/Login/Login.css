@@ -1,0 +1,8 @@
+.login {
+    flex-direction: column;
+    gap: 1vw;
+    width: 100vw;
+    height: 100vh;
+    background-color: #300078;
+    color: #fff;
+}

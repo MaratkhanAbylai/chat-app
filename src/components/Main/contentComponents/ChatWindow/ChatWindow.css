@@ -42,5 +42,12 @@
     border-radius: 1rem;
     display: flex;
     gap: 0.5rem;
-    
+}
+
+.companion-msg {
+    margin-right: 50%;
+}
+
+.my-msg {
+    margin-left: 50%;
 }

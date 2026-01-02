@@ -1,6 +1,7 @@
 import { useState } from "react";
+import './Register.css'
 
-function Register({ setScreen }) {
+function Register({ setScreen, setUser }) {
     
     const [login, setLogin] = useState('');
     const [passwordFirst, setPasswordFirst] = useState('');
@@ -8,46 +9,56 @@ function Register({ setScreen }) {
     const [loading, setLoading] = useState(false);
 
     async function handleClick() {
+
+        if(!login || !passwordFirst || !passwordSecond) {
+            alert('Все поля должны быть заполнен!');
+            return;
+        }
+
         if(passwordFirst !== passwordSecond) {
             alert('Пароли не совпадают');
-            setPasswordFirst('');
-            setPasswordSecond('');
             return;
         }
 
         try {
 
             setLoading(true);
-
-            const data = {
-                username: login,
-                password: passwordFirst
-            }
-
-            const response = await fetch("link to bd", {
+            
+            const response = await fetch('/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    username: login,
+                    password: passwordFirst
+                })
             });
 
-            const result = await response.json();
+            const res = await response.json();
 
-            if(result.status === "error") {
-                alert(result.message);
+            if(!response.ok || res.status === 'error') {
+                alert(res.message || 'Произошла ошибка при регистрации');
+                return;
             }
 
-            alert("Успех");
-            setScreen("main");
-            setLogin('');
-            setPasswordFirst('');
-            setPasswordSecond('');
-        } catch {
-            alert("Ошибка");
+            localStorage.setItem('token', res.token);
+            
+            setUser({
+                login: user.username,
+                avatar: user.avatar,
+                token: user.token
+            });
+
+            setScreen('main');
+
+        } catch(err) {
+            console.error(err);
+            alert('Ошибка сети');
         } finally {
             setLoading(false);
         }
+
     }
 
     function changeComponent() {

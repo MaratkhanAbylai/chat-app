@@ -25,7 +25,6 @@ function Search() {
                         <img src={user.link} alt="Изоброжения пользователя" />
                         <p className='friends-login'>{user.login}</p>
                         <button className='send-request-btn'>Отправить запрос</button>
-                        <button className='write-btn'>Написать</button>
                     </div>
                 ))}
 

@@ -19,18 +19,3 @@
     height: 8rem;
     object-fit: cover;
 }
-
-.send-request-btn, .write-btn {
-    border: 1px solid #fff;
-    padding: 0.3rem;
-    border-radius: 1rem;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    cursor: pointer;
-    transition: 0.5s ease;
-}
-
-.send-request-btn:hover, .write-btn:hover {
-    background-color: #fff;
-    color: #bfbdbd;
-}

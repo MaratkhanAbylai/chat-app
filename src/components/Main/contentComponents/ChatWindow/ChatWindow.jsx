@@ -7,13 +7,43 @@ function ChatWindow({ companion, back }) {
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
-        if(!companion) return;
+        if (!companion) return;
 
-        fetch(`link`)
-        .then(res => res.json())
+        fetch(`/api/messages/${companion.id}`)
+        .then(res => {
+            if(!res.ok) {
+                throw new Error("Ошибка при загрузке сообщений");
+            }
+
+            return res.json();
+        })
         .then(data => setMessages(data))
         .catch(err => console.error(err));
-    }, []);
+
+    }, [companion]);
+
+    async function sendMsg() {
+        if(!inputValue.trim()) return;
+
+        fetch('/api/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                to: companion.id,
+                text: inputValue
+            })
+        })
+        .then(res => res.json())
+        .then(savedMessage => {
+            setMessages(prev => [...prev, savedMessage]);
+            setInputValue('');
+        })
+        .catch(err => console.error(err));
+
+    }
 
     if (!companion) return null;
 
@@ -28,9 +58,12 @@ function ChatWindow({ companion, back }) {
             </div>
 
             <div className="chat-messages">
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa nesciunt recusandae vel soluta dolores maiores. Facere corrupti doloremque labore praesentium dolorem nulla, eveniet numquam architecto iste repellendus recusandae vero porro.</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa nesciunt recusandae vel soluta dolores maiores. Facere corrupti doloremque labore praesentium dolorem nulla, eveniet numquam architecto iste repellendus recusandae vero porro.</p>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa nesciunt recusandae vel soluta dolores maiores. Facere corrupti doloremque labore praesentium dolorem nulla, eveniet numquam architecto iste repellendus recusandae vero porro.</p>
+                <p className="companion-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className="my-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
+                <p className="companion-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className="my-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p> 
+                <p className="companion-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className="my-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
             </div>
 
             <div className="chat-input">
@@ -38,7 +71,7 @@ function ChatWindow({ companion, back }) {
                  value={inputValue}
                  onChange={e => setInputValue(e.target.value)}
                 />
-                <button>Send</button>
+                <button onClick={sendMsg}>Send</button>
             </div>
 
         </div>

@@ -8,6 +8,10 @@
     width: 100vw;
 }
 
+img {
+    border-radius: 1rem;
+}
+
 h1 {
     color: #fff;
 }
@@ -19,6 +23,11 @@ h1 {
 }
 
 .companion-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     color: #fff;
     cursor: pointer;
 }
