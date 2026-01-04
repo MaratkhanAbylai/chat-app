@@ -21,7 +21,6 @@ function App() {
           goToLogin={() => setScreen("login")}
         />
       )}
-      {user === null && "Вы не авторизовались"}
     </div>
   );
 }
