@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './Register.css'
+import classes from './Register.module.css'
 
 function Register({ setScreen, setUser }) {
     
@@ -67,7 +67,7 @@ function Register({ setScreen, setUser }) {
 
     return <>
 
-        <div className="Register">
+        <div className={classes.Register}>
             <input type="text" 
              value={login}
              onChange={e => setLogin(e.target.value)}

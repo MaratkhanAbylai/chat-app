@@ -1,5 +1,5 @@
 import { useState } from "react"
-import './Login.css'
+import classes from './Login.module.css'
 
 function Login({ setScreen, setUser }) {
     
@@ -59,7 +59,7 @@ function Login({ setScreen, setUser }) {
     }
 
     return <>
-        <div className="login">
+        <div className={classes.login}>
             <input type="text"
              value={nameValue}
              onChange={e => setNameValue(e.target.value)}

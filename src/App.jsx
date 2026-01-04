@@ -1,24 +1,29 @@
-import { useState } from 'react'
-import Login from './components/Login/Login'
-import Register from './components/Register/Register'
-import Main from './components/Main/Main'
-import './App.css'
+import { useEffect, useState } from "react";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Main from "./components/Main/Main";
+import styles from "./App.module.css";
 
 function App() {
-
-  const [screen, setScreen] = useState('login');
-
+  const [screen, setScreen] = useState("main");
   const [user, setUser] = useState(null);
 
   return (
-    <>
-      <div className="container">
-        {screen === "login" && <Login setScreen={setScreen} setUser={setUser} />}
-        {screen === "register" && <Register setScreen={setScreen} setUser={setUser} />}
-        {screen === "main" && <Main />}
-      </div>
-    </>
-  )
+    <div className={styles.app}>
+      {screen === "login" && <Login setScreen={setScreen} setUser={setUser} />}
+      {screen === "register" && (
+        <Register setScreen={setScreen} setUser={setUser} />
+      )}
+      {screen === "main" && (
+        <Main
+          user={user}
+          setUser={setUser}
+          goToLogin={() => setScreen("login")}
+        />
+      )}
+      {user === null && "Вы не авторизовались"}
+    </div>
+  );
 }
 
 export default App;
