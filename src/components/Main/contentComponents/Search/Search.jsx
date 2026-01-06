@@ -1,28 +1,54 @@
-import { useState } from "react";
-import { v4 as uuid } from "uuid"
+import { useEffect, useState } from "react";
 import './Search.css'
 
-function Search() {
+function Search({ user }) {
 
     const [inputValue, setInputValue] = useState('');
     const [resultUsers, setResultUsers] = useState([
-        {id: uuid(), login: "Cole Palmer", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtRQOe9JQO3bQetUJsweuxTH_v3pmtp3LVQ&s"}
+        {id: 1, login: "Cole Palmer", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUtRQOe9JQO3bQetUJsweuxTH_v3pmtp3LVQ&s"}
     ]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    async function search() {
-        if(!inputValue.trim()) return;
+    const token = localStorage.getItem("token");
 
-        const response = await fetch('/api/users', {
-            method: 'GET',
-            headers: {'Content-type' : 'application/json'},
-            body: {username: inputValue}
-        });
+    useEffect(() => {
 
-        const res = await response.json();
+        if(!inputValue.trim()) {
+            setResultUsers([]);
+            setLoading(false);
+            return;
+        }
 
-    }
+        setLoading(true);
+        setError(null);
 
-    return  <>
+        const timeout = setTimeout(async () => {
+            try {
+
+                const res = await fetch(`/api/search?login=${encodeURIComponent(inputValue)}`, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                });
+
+                if(!res.ok) throw new Error("Ошибка при поиске");
+
+                const data = await res.json();
+                setResultUsers(data);
+
+            } catch(err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }, 400);
+
+        return () => clearTimeout(timeout);
+
+    }, [inputValue]);
+
+    return <>
 
         <div className="searchContainer">
 
@@ -31,19 +57,29 @@ function Search() {
                  value={inputValue}
                  onChange={e => setInputValue(e.target.value)}
                 />
-
-                <button>Поиск</button>
             </div>
 
-            <div className="result-block">
+            <div className="results-block">
 
-                {resultUsers.map(user => (
-                    <div className="user" key={user.id}>
-                        <img src={user.avatar} alt="Изоброжения пользователя" />
-                        <p className='friends-login'>{user.login}</p>
-                        <button className='send-request-btn'>Отправить запрос</button>
-                    </div>
-                ))}
+                {loading && <p>Поиск...</p>}
+                {!loading && resultUsers.length === 0 && inputValue && !error &&
+                 <p>Пользователь не найден</p>
+                }
+                {error && inputValue.trim() !== '' &&
+                 <p>{error}</p>
+                }
+
+                {resultUsers.map(u => {
+                    if(u.id === user.id) return null;
+
+                    return (
+                        <div key={u.id} className="resultUser">
+                            <img src={u.avatar ? u.avatar : 'default.png'} alt="user's avatar" />
+                            <p>{u.login}</p>
+                            <button>Отправить запрос</button>
+                        </div>
+                    )
+                })}
 
             </div>
 

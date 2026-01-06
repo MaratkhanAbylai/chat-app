@@ -62,7 +62,7 @@ function Main({ user, setUser, goToLogin }) {
       <main className={styles.main}>
         {screen === "chats" && <Chats openChat={openChat} />}
         {screen === "friends" && <FriendsComponent />}
-        {screen === "search" && <Search />}
+        {screen === "search" && <Search openChat={openChat} user={user} />}
         {screen === "chat" && (
           <ChatWindow companion={activeChat} back={backToChats} />
         )}

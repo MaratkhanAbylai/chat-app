@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: application/json; charset=utf-8");
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -7,8 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
-
-header("Content-Type: application/json");
 
 require_once "db.php";
 
@@ -25,15 +24,7 @@ if (!isset($input['username'], $input['password'])) {
 $username = trim($input['username']);
 $password = $input['password'];
 
-if ($username === "" || $password === "") {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Логин и пароль обязательны"
-    ]);
-    exit;
-}
-
-/* проверка: существует ли пользователь */
+/* 1. Проверяем, что пользователя нет */
 $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
 $stmt->execute([$username]);
 
@@ -45,25 +36,24 @@ if ($stmt->fetch()) {
     exit;
 }
 
-/* хеширование пароля */
+/* 2. Хешируем пароль */
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-/* вставка пользователя */
+/* 3. Генерируем токен (ДА, ТУТ) */
+$token = bin2hex(random_bytes(32));
+
+/* 4. Создаём пользователя СРАЗУ с токеном */
 $stmt = $pdo->prepare(
-    "INSERT INTO users (username, password) VALUES (?, ?)"
+    "INSERT INTO users (username, password, token)
+     VALUES (?, ?, ?)"
 );
+$stmt->execute([$username, $hashedPassword, $token]);
 
-if ($stmt->execute([$username, $hashedPassword])) {
-    echo json_encode([
-        "status" => "success",
-        "message" => "Регистрация успешна"
-    ]);
-} else {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Ошибка регистрации"
-        "user_id" => $user['id'],
-        "username" => $username
-    ]);
-}
-
+/* 5. Отдаём токен клиенту */
+echo json_encode([
+    "status" => "success",
+    "message" => "Регистрация успешна",
+    "token" => $token,
+    "username" => $username
+]);
+exit;
