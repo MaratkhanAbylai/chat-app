@@ -56,7 +56,7 @@ function Search({ user }) {
 
             setRequestLoadingId(id);
 
-            const response = await fetch('/api', {
+            const response = await fetch('/api/friends/request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
