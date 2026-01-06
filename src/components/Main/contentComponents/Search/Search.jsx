@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import './Search.css'
+import classes from './Search.module.css';
 
 function Search({ user }) {
 
@@ -48,8 +48,7 @@ function Search({ user }) {
 
     }, [inputValue]);
 
-    return <>
-
+    return (
         <div className="searchContainer">
 
             <div className="input-block">
@@ -82,11 +81,8 @@ function Search({ user }) {
                 })}
 
             </div>
-
         </div>
-
-    </>
-
+    );
 }
 
 export default Search;
