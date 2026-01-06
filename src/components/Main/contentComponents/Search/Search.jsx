@@ -12,6 +12,8 @@ function Search({ user }) {
 
     const token = localStorage.getItem("token");
 
+    const [requestLoadingId, setRequestLoadingId] = useState(null);
+    const [requestedIds, setRequestedIds] = useState([]);
     useEffect(() => {
 
         if(!inputValue.trim()) {
@@ -46,7 +48,39 @@ function Search({ user }) {
 
         return () => clearTimeout(timeout);
 
-    }, [inputValue]);
+    }, [inputValue, token]);
+
+    async function sendRequest(id) {
+
+        try {
+
+            setRequestLoadingId(id);
+
+            const response = await fetch('/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify({
+                    to: id,
+                    from: user.id // По идее фромды алып тастасакта болады если бэк токеннан айдиды алуга шамасы жетсе)
+                })
+            });
+
+            const res = await response.json();
+
+            if(!response.ok) throw new Error('Произошла ошибка при отправке запроса');
+
+            setRequestedIds(prev => [...prev, id]);
+
+        } catch(err) {
+            console.error(err);
+        } finally {
+            setRequestLoadingId(prev => (prev === id ? null : prev));
+        }
+
+    }
 
     return (
         <div className="searchContainer">
@@ -75,7 +109,17 @@ function Search({ user }) {
                         <div key={u.id} className="resultUser">
                             <img src={u.avatar ? u.avatar : 'default.png'} alt="user's avatar" />
                             <p>{u.login}</p>
-                            <button>Отправить запрос</button>
+                            {requestedIds.includes(u.id) ? 
+                                (<span>Запрос отправлен</span>)
+                                :
+                                (<button disabled={requestLoadingId === u.id} onClick={() => sendRequest(u.id)}>
+                                    {requestLoadingId === u.id ?
+                                        "Отрпавка запроса..."
+                                        :
+                                        "Отправить запрос"
+                                    }
+                                </button>)
+                            }
                         </div>
                     )
                 })}
