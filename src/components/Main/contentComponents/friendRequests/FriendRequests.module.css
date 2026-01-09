@@ -1,0 +1,18 @@
+.requests-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.requests-number {
+    font-size: 2rem;
+}
+
+.avatar {
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+}

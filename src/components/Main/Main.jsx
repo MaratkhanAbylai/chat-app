@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./Main.module.css";
 import Chats from "./contentComponents/Chats/Chats";
 import FriendsComponent from "./contentComponents/Friends/FriendsComponent";
+import FriendRequests from "./contentComponents/friendRequests/FriendRequests";
 import Search from "./contentComponents/Search/Search";
 import ChatWindow from "./contentComponents/ChatWindow/ChatWindow";
 
@@ -50,6 +51,9 @@ function Main({ user, setUser, goToLogin }) {
               <button onClick={() => setScreen("friends")}>Друзья</button>
             </li>
             <li>
+              <button onClick={() => setScreen("requests")}>Заявки</button>
+            </li>
+            <li>
               <button onClick={() => setScreen("search")}>Поиск</button>
             </li>
             <li>
@@ -64,6 +68,7 @@ function Main({ user, setUser, goToLogin }) {
       <main className={styles.main}>
         {screen === "chats" && <Chats openChat={openChat} />}
         {screen === "friends" && <FriendsComponent openChat={openChat} />}
+        {screen === "requests" && <FriendRequests />}
         {screen === "search" && <Search user={user} />}
         {screen === "chat" && (
           <ChatWindow companion={activeChat} back={backToChats} />
