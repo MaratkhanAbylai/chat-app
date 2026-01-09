@@ -53,7 +53,7 @@ function ChatWindow({ companion, back }) {
 
             <div className="header">
                 <button onClick={back}>←</button>
-                <img src={companion.link} alt="" />
+                <img src={companion.avatar} alt="" />
                 <p>{companion.login}</p>
             </div>
 

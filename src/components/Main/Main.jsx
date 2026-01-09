@@ -10,15 +10,17 @@ function Main({ user, setUser, goToLogin }) {
 
   const [screen, setScreen] = useState("chats");
   const [activeChat, setActiveChat] = useState(null);
+  const [prevScreen, setPrevScreen] = useState(null);
 
   function openChat(companion) {
+    setPrevScreen(screen);
     setActiveChat(companion);
     setScreen("chat");
   }
 
   function backToChats() {
     setActiveChat(null);
-    setScreen("chats");
+    setScreen(prevScreen || "chats");
   }
 
   function logout() {
@@ -61,8 +63,8 @@ function Main({ user, setUser, goToLogin }) {
 
       <main className={styles.main}>
         {screen === "chats" && <Chats openChat={openChat} />}
-        {screen === "friends" && <FriendsComponent />}
-        {screen === "search" && <Search openChat={openChat} user={user} />}
+        {screen === "friends" && <FriendsComponent openChat={openChat} />}
+        {screen === "search" && <Search user={user} />}
         {screen === "chat" && (
           <ChatWindow companion={activeChat} back={backToChats} />
         )}

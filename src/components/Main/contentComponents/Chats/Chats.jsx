@@ -5,10 +5,10 @@ import './Chats.css'
 function Chats({ openChat }) {
 
     const[companions, setComponions] = useState([
-        {id: 1, link: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole1', lastMessage: 'Hello, how are you?'},
-        {id: 2, link: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole2', lastMessage: 'Hello, how are you?'},
-        {id: 3, link: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole3', lastMessage: 'Hello, how are you?'},
-        {id: 4, link: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole', lastMessage: 'Hello, how are you?'}
+        {id: 1, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole1', lastMessage: 'Hello, how are you?'},
+        {id: 2, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole2', lastMessage: 'Hello, how are you?'},
+        {id: 3, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole3', lastMessage: 'Hello, how are you?'},
+        {id: 4, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole', lastMessage: 'Hello, how are you?'}
     ]);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function Chats({ openChat }) {
             <div className="companions">
                 {companions.map(companion => (
                     <div className="companion-container" key={companion.id} onClick={() => openChat(companion)}>
-                        <img src={companion.link} alt="companion's avatar" />
+                        <img src={companion.avatar} alt="companion's avatar" />
                         <p className="companion-login">{companion.login}</p>
                         <p className="last-message">{companion.lastMessage ? companion.lastMessage.slice(0, 13) + "..." : ""}</p>
                     </div>
