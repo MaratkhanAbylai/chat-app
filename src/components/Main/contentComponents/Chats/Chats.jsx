@@ -12,7 +12,7 @@ function Chats({ openChat }) {
     ]);
 
     useEffect(() => {
-        fetch('link to db')
+        fetch('/api/chats/')
         .then(res => res.json())
         .then(data => setComponions(data))
         .catch(err => console.error(err));
