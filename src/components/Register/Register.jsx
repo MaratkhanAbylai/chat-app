@@ -5,18 +5,36 @@ function Register({ setScreen, setUser }) {
     const [login, setLogin] = useState("");
     const [passwordFirst, setPasswordFirst] = useState("");
     const [passwordSecond, setPasswordSecond] = useState("");
+    const [code, setCode] = useState("");
     const [loading, setLoading] = useState(false);
 
     async function handleClick() {
         // 1. Валидация
-        if (!login || !passwordFirst || !passwordSecond) {
+        if (!login || !passwordFirst || !passwordSecond || !code) {
             alert("Все поля должны быть заполнены");
+            return;
+        }
+
+        if(login.length < 2) {
+            alert('Логин должен состоять минимум из 2 символов');
             return;
         }
 
         if (passwordFirst !== passwordSecond) {
             alert("Пароли не совпадают");
             return;
+        }
+
+        if(passwordFirst.length < 8) {
+            alert("Пароль должен состоять минимум из 8 символов");
+            return
+        }
+
+        for(let i = 0; i < code.length; i++) {
+            if(code[i] === ' ') {
+                alert('Кодовое слово не должно содержать пробел');
+                return;
+            }
         }
 
         try {
@@ -30,7 +48,8 @@ function Register({ setScreen, setUser }) {
                 },
                 body: JSON.stringify({
                     username: login,
-                    password: passwordFirst
+                    password: passwordFirst,
+                    codeWord: code
                 })
             });
 
@@ -88,6 +107,14 @@ function Register({ setScreen, setUser }) {
                 value={passwordSecond}
                 onChange={(e) => setPasswordSecond(e.target.value)}
                 placeholder="Повторите пароль"
+                disabled={loading}
+            />
+
+            <input
+                type="text"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                placeholder="Кодовое слово"
                 disabled={loading}
             />
 

@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Main from "./components/Main/Main";
+import PasswordRecovery from "./components/PasswordRecovery/PasswordRecovery";
+
 import styles from "./App.module.css";
 
 function App() {
-  const [screen, setScreen] = useState("main");
-  const [user, setUser] = useState("null");
+  const [screen, setScreen] = useState("login");
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // 🔑 ВОССТАНОВЛЕНИЕ СЕССИИ ПРИ F5
@@ -53,6 +55,7 @@ function App() {
       {screen === "register" && (
         <Register setScreen={setScreen} setUser={setUser} />
       )}
+      {screen === 'recovery' && <PasswordRecovery setScreen={setScreen} />}
       {screen === "main" && (
         <Main
           user={user}

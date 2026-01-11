@@ -1,14 +1,26 @@
 import { useState } from "react";
 import classes from "./Login.module.css";
 
-function Login({ setScreen, setUser }) {
+function Login({ setScreen, setUser, setVerified }) {
     const [nameValue, setNameValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const [restore, setRestore] = useState(false);
+
     async function handleClick() {
         if (!nameValue || !passwordValue) {
             alert("Введите логин и пароль");
+            return;
+        }
+
+        if(nameValue.length < 2) {
+            alert('Логин не может быть меньше 2 символов');
+            return;
+        }
+
+        if(passwordValue.length < 8) {
+            alert('Пароль должен состоять минимум из 8 символов');
             return;
         }
 
@@ -60,7 +72,13 @@ function Login({ setScreen, setUser }) {
         setScreen("register");
     }
 
-    return (
+    function recoveryBtn() {
+        setVerified(false);
+        setScreen('recovery');
+    }
+
+    return <>
+
         <div className={classes.login}>
             <input
                 type="text"
@@ -82,13 +100,15 @@ function Login({ setScreen, setUser }) {
                 {loading ? "Попытка входа..." : "Войти"}
             </button>
 
+            <button disabled={loading} onClick={() => setScreen('recovery')}>Восстановить пароль</button>
+
             <p>или</p>
 
             <button onClick={changeComponent} disabled={loading}>
                 Зарегистрироваться
             </button>
         </div>
-    );
+    </>
 }
 
 export default Login;
