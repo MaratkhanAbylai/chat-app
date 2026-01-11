@@ -10,11 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once "../db.php";
-require_once "auth.php"; // 🔐 защита токеном
+require_once "../auth.php";
 
 $input = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($input['query']) || trim($input['query']) === "") {
+if (!is_array($input)) {
     echo json_encode([
         "status" => "success",
         "users" => []
@@ -22,22 +22,31 @@ if (!isset($input['query']) || trim($input['query']) === "") {
     exit;
 }
 
-$query = "%" . trim($input['query']) . "%";
+$search = trim($input['query'] ?? '');
 
+if ($search === '') {
+    echo json_encode([
+        "status" => "success",
+        "users" => []
+    ]);
+    exit;
+}
 
 $stmt = $pdo->prepare("
-    SELECT id, username AS login, avatar
+    SELECT id, username AS login
     FROM users
     WHERE username LIKE ?
       AND id != ?
     LIMIT 10
 ");
 
-$stmt->execute([$query, $user['id']]);
-$users = $stmt->fetchAll();
+$stmt->execute([
+    "%$search%",
+    $user['id']
+]);
 
 echo json_encode([
     "status" => "success",
-    "users" => $users
+    "users" => $stmt->fetchAll()
 ]);
 exit;

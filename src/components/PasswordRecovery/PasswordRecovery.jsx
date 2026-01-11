@@ -102,7 +102,7 @@ function PasswordRecovery({ setScreen }) {
 
             setPassLoading(true);
 
-            const response = await fetch('/api/users/', {
+            const response = await fetch('<localhost:8000/api/users/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

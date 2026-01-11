@@ -15,40 +15,43 @@ function Search({ user }) {
     const [requestLoadingId, setRequestLoadingId] = useState(null);
     const [requestedIds, setRequestedIds] = useState([]);
     useEffect(() => {
+  if (!inputValue.trim()) {
+    setResultUsers([]);
+    setLoading(false);
+    return;
+  }
 
-        if(!inputValue.trim()) {
-            setResultUsers([]);
-            setLoading(false);
-            return;
-        }
+  setLoading(true);
+  setError(null);
 
-        setLoading(true);
-        setError(null);
+  const timeout = setTimeout(async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/search.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+          query: inputValue
+        })
+      });
 
-        const timeout = setTimeout(async () => {
-            try {
+      if (!res.ok) throw new Error("Ошибка при поиске");
 
-                const res = await fetch(`/api/search?login=${encodeURIComponent(inputValue)}`, {
-                    headers: {
-                        Authorization: 'Bearer ' + token
-                    }
-                });
+      const data = await res.json();
+      setResultUsers(data.users);
 
-                if(!res.ok) throw new Error("Ошибка при поиске");
+    } catch (err) {
+      setError(err.message);
+      setResultUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  }, 400);
 
-                const data = await res.json();
-                setResultUsers(data);
-
-            } catch(err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        }, 400);
-
-        return () => clearTimeout(timeout);
-
-    }, [inputValue, token]);
+  return () => clearTimeout(timeout);
+}, [inputValue, token]);
 
     async function sendRequest(id) {
 
@@ -56,7 +59,7 @@ function Search({ user }) {
 
             setRequestLoadingId(id);
 
-            const response = await fetch('/api/friends/request', {
+            const response = await fetch('http://localhost:8000/api/friends/request.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

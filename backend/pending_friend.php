@@ -1,27 +1,26 @@
 <?php
-require_once "db.php";
-$input = json_decode(file_get_contents("php://input"), true);
+header("Content-Type: application/json; charset=utf-8");
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-$fromUser = (int)$input['from_user'];
-$toUser = (int)$input['to_User'];
+require_once "auth.php";
 
-if($fromUser === $toUser) {
-    echo json_encode(["status" => "error", "message" => "нельзя себя добавить"]);
-    exit;
-}
+$stmt = $pdo->prepare("
+    SELECT 
+        fr.id,
+        u.username AS login,
+        u.avatar
+    FROM friend_requests fr
+    JOIN users u ON u.id = fr.from_user
+    WHERE fr.to_user = ?
+      AND fr.status = 'pending'
+");
 
-$stmt->execute([$fromUser , $toUser]);
-if($stmt->fetch()){
-    echo json_encode(["status" => "error", "message" => "Запрос уже отправлен"]);
-    exit;
-}
-
-$stmt = $pdo->prepare(
-  "INSERT INTO friends (user_id, friend_id, status)
-   VALUES (?, ?, 'pending')");
-$stmt->execute([fromUser, $toUser]);
+$stmt->execute([$user['id']]);
+$requests = $stmt->fetchAll();
 
 echo json_encode([
-  "status" => "success",
-  "message" => "Запрос отправлен"
+    "status" => "success",
+    "requests" => $requests
 ]);
+exit;
