@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import styles from "./Main.module.css";
 import Chats from "./contentComponents/Chats/Chats";
 import FriendsComponent from "./contentComponents/Friends/FriendsComponent";
@@ -12,6 +12,66 @@ function Main({ user, setUser, goToLogin }) {
   const [screen, setScreen] = useState("chats");
   const [activeChat, setActiveChat] = useState(null);
   const [prevScreen, setPrevScreen] = useState(null);
+  const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (user?.avatar?.startsWith("blob:")) {
+        URL.revokeObjectURL(user.avatar);
+      }
+    };
+  }, [user?.avatar]);
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Можно загрузить только изображение");
+      return;
+    }
+
+    const MAX_SIZE = 5 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      alert("Размер изображения не должен превышать 5MB");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      const response = await fetch("/api/avatar", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + user.token
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const data = await response.json();
+
+      setUser(prev => ({
+        ...prev,
+        avatar: data.avatar
+      }));
+
+    } catch (err) {
+      console.error(err);
+      alert("Не удалось загрузить аватар");
+    }
+
+    e.target.value = null;
+  };
+
 
   function openChat(companion) {
     setPrevScreen(screen);
@@ -38,6 +98,14 @@ function Main({ user, setUser, goToLogin }) {
             src={user.avatar || "/default-avatar.png"}
             alt="avatar"
             className={styles.logo}
+            onClick={handleImageClick}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            style={{ display: "none" }}
           />
           <p className={styles.login}>{user.login}</p>
         </div>  
