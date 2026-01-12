@@ -5,18 +5,28 @@ function Register({ setScreen, setUser }) {
     const [login, setLogin] = useState("");
     const [passwordFirst, setPasswordFirst] = useState("");
     const [passwordSecond, setPasswordSecond] = useState("");
-    const [code, setCode] = useState("");
+    const [steer, setSteer] = useState("");
     const [loading, setLoading] = useState(false);
 
     async function handleClick() {
         // 1. Валидация
-        if (!login || !passwordFirst || !passwordSecond || !code) {
+        if (!login || !passwordFirst || !passwordSecond || !steer) {
             alert("Все поля должны быть заполнены");
             return;
         }
 
         if(login.length < 2) {
             alert('Логин должен состоять минимум из 2 символов');
+            return;
+        }
+
+        if(steer.length > 30) {
+            alert('Максимальная длина подсказки 30 символов');
+            return;
+        }
+
+        if(steer === passwordFirst) {
+            alert('Пароль и подсказка должны отличаться');
             return;
         }
 
@@ -28,13 +38,6 @@ function Register({ setScreen, setUser }) {
         if(passwordFirst.length < 8) {
             alert("Пароль должен состоять минимум из 8 символов");
             return
-        }
-
-        for(let i = 0; i < code.length; i++) {
-            if(code[i] === ' ') {
-                alert('Кодовое слово не должно содержать пробел');
-                return;
-            }
         }
 
         try {
@@ -49,7 +52,7 @@ function Register({ setScreen, setUser }) {
                 body: JSON.stringify({
                     username: login,
                     password: passwordFirst,
-                    codeWord: code
+                    steer: steer
                 })
             });
 
@@ -80,10 +83,6 @@ function Register({ setScreen, setUser }) {
         }
     }
 
-    function changeComponent() {
-        setScreen("login");
-    }
-
     return (
         <div className={classes.Register}>
             <input
@@ -112,9 +111,9 @@ function Register({ setScreen, setUser }) {
 
             <input
                 type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="Кодовое слово"
+                value={steer}
+                onChange={(e) => setSteer(e.target.value)}
+                placeholder="Подсказка к паролю"
                 disabled={loading}
             />
 
@@ -124,7 +123,7 @@ function Register({ setScreen, setUser }) {
 
             <p>или</p>
 
-            <button onClick={changeComponent} disabled={loading}>
+            <button onClick={() => setScreen('login')} disabled={loading}>
                 Войти
             </button>
         </div>

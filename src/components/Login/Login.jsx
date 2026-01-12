@@ -6,7 +6,8 @@ function Login({ setScreen, setUser, setVerified }) {
     const [passwordValue, setPasswordValue] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const [restore, setRestore] = useState(false);
+    const [steer, setSteer] = useState('');
+    const [steerLoading, setSteerLoading] = useState(false);
 
     async function handleClick() {
         if (!nameValue || !passwordValue) {
@@ -72,9 +73,48 @@ function Login({ setScreen, setUser, setVerified }) {
         setScreen("register");
     }
 
-    function recoveryBtn() {
-        setVerified(false);
-        setScreen('recovery');
+    async function getSteer() {
+        
+        if(!nameValue) {
+            alert('Введите ваш логин для получения подсказки');
+            return;
+        }
+
+        if(nameValue.length < 2) {
+            alert('Логин должен состоять минимум из 2 символов');
+            return;
+        }
+
+        try {
+
+            setSteerLoading(true);
+
+            const response = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    login: nameValue
+                })
+            });
+
+            const res = await response.json();
+
+            if(!response.ok || res.status === 'error') {
+                alert(res.message || 'Произошла ошибка');
+                return;
+            }
+
+            setSteer(res.steer);
+
+        } catch(err) {
+            console.error(err);
+            alert(err.message);
+        } finally {
+            setSteerLoading(false);
+        }
+
     }
 
     return <>
@@ -83,7 +123,7 @@ function Login({ setScreen, setUser, setVerified }) {
             <input
                 type="text"
                 value={nameValue}
-                onChange={(e) => setNameValue(e.target.value)}
+                onChange={(e) => {setNameValue(e.target.value); setSteer('')}}
                 placeholder="Введите логин"
                 disabled={loading}
             />
@@ -100,7 +140,7 @@ function Login({ setScreen, setUser, setVerified }) {
                 {loading ? "Попытка входа..." : "Войти"}
             </button>
 
-            <button disabled={loading} onClick={() => setScreen('recovery')}>Восстановить пароль</button>
+            {steer.length > 0 ? <p>{steer}</p> : <button disabled={steerLoading} onClick={getSteer}>Получить подсказку</button>}
 
             <p>или</p>
 

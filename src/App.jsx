@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Main from "./components/Main/Main";
-import PasswordRecovery from "./components/PasswordRecovery/PasswordRecovery";
 
 import styles from "./App.module.css";
 
@@ -55,7 +54,6 @@ function App() {
       {screen === "register" && (
         <Register setScreen={setScreen} setUser={setUser} />
       )}
-      {screen === 'recovery' && <PasswordRecovery setScreen={setScreen} />}
       {screen === "main" && (
         <Main
           user={user}
