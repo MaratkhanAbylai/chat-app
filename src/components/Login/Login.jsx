@@ -7,7 +7,6 @@ function Login({ setScreen, setUser, setVerified }) {
     const [loading, setLoading] = useState(false);
 
     const [steer, setSteer] = useState('');
-    const [steerLoading, setSteerLoading] = useState(false);
 
     async function handleClick() {
         if (!nameValue || !passwordValue) {
@@ -87,7 +86,7 @@ function Login({ setScreen, setUser, setVerified }) {
 
         try {
 
-            setSteerLoading(true);
+            setLoading(true);
 
             const response = await fetch('/api/users', {
                 method: 'POST',
@@ -112,7 +111,7 @@ function Login({ setScreen, setUser, setVerified }) {
             console.error(err);
             alert(err.message);
         } finally {
-            setSteerLoading(false);
+            setLoading(false);
         }
 
     }
@@ -140,7 +139,7 @@ function Login({ setScreen, setUser, setVerified }) {
                 {loading ? "Попытка входа..." : "Войти"}
             </button>
 
-            {steer.length > 0 ? <p>{steer}</p> : <button disabled={steerLoading} onClick={getSteer}>Получить подсказку</button>}
+            {steer.length > 0 ? <p>{steer}</p> : <button disabled={loading} onClick={getSteer}>Получить подсказку</button>}
 
             <p>или</p>
 
