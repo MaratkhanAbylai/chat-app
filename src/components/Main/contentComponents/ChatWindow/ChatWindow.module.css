@@ -1,0 +1,217 @@
+/* ========================= */
+/* BASE LAYOUT */
+/* ========================= */
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;              /* ВАЖНО */
+  width: 100%;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
+
+.header {
+  color: #FFEE40;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  font-size: 1.4rem;
+  padding: 1rem;
+  flex-shrink: 0;             /* фиксируем */
+}
+
+.back-btn {
+  font-size: 2.2rem;
+  background-color: transparent;
+  border: none;
+  color: #141414;
+  cursor: pointer;
+}
+
+.header img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+
+.header p {
+  background-color: #530FAD;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+/* ========================= */
+/* CHAT MESSAGES (SCROLL) */
+/* ========================= */
+
+.chat-messages {
+  flex: 1;                    /* занимает всё свободное место */
+  width: 100%;
+  max-width: 80%;
+
+  background-color: rgba(32, 0, 79, 0.5);
+  padding: 1.5rem;
+  border-radius: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  overflow-y: auto;           /* СКРОЛЛ */
+  overscroll-behavior: contain;
+}
+
+/* сообщения */
+
+.companion-msg {
+  align-self: flex-start;
+  max-width: 70%;
+  background-color: #fff;
+  color: #141414;
+  padding: 0.6rem 0.8rem;
+  border-radius: 1rem 1rem 1rem 0;
+}
+
+.my-msg {
+  align-self: flex-end;
+  max-width: 70%;
+  background-color: #141414;
+  color: #FFEE40;
+  padding: 0.6rem 0.8rem;
+  border-radius: 1rem 1rem 0 1rem;
+}
+
+/* ========================= */
+/* INPUT */
+/* ========================= */
+
+.chat-input {
+  background-color: rgba(32, 0, 79, 0.5);
+  padding: 0.75rem;
+  border-radius: 1rem;
+  display: flex;
+  gap: 0.5rem;
+
+  width: 100%;
+  max-width: 80%;
+
+  flex-shrink: 0;             /* фиксируем */
+  margin-bottom: 1rem;
+}
+
+.input {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: box-shadow 0.25s ease;
+}
+
+.input:focus {
+  box-shadow:
+    0 0 0 2px rgba(166, 151, 0, 0.65),
+    0 8px 24px rgba(166, 151, 0, 0.65),
+    0 0 40px rgba(166, 151, 0, 0.75);
+}
+
+.send-btn {
+  width: 3rem;
+  height: 3rem;
+  background-color: #FFEE40;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.send-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* ========================= */
+/* 📱 TABLET (≤1024px) */
+/* ========================= */
+
+@media (max-width: 1024px) {
+  .chat-messages,
+  .chat-input {
+    max-width: 90%;
+  }
+
+  .header img {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .header {
+    font-size: 1.3rem;
+  }
+}
+
+/* ========================= */
+/* 📱 MOBILE (≤768px) */
+/* ========================= */
+
+@media (max-width: 768px) {
+  .chat-window {
+    gap: 0.5rem;
+  }
+
+  .header {
+    gap: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .header img {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .chat-messages,
+  .chat-input {
+    max-width: 90%;
+  }
+
+  .chat-messages {
+    padding: 1rem;
+  }
+
+  .my-msg,
+  .companion-msg {
+    max-width: 85%;
+    font-size: 0.95rem;
+  }
+
+  .send-btn {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .send-icon {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+}
+
+/* ========================= */
+/* 📱 SMALL MOBILE (≤480px) */
+/* ========================= */
+
+@media (max-width: 480px) {
+  .header p {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .input {
+    font-size: 15px;
+  }
+}

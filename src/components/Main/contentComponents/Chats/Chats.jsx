@@ -27,7 +27,7 @@ function Chats({ openChat }) {
             <div className="companions">
                 {companions.map(companion => (
                     <div className="companion-container" key={companion.id} onClick={() => openChat(companion)}>
-                        <img src={companion.avatar} alt="companion's avatar" />
+                        <img className="avatar" src={companion.avatar} alt="companion's avatar" />
                         <p className="companion-login">{companion.login}</p>
                         <p className="last-message">{companion.lastMessage ? companion.lastMessage.slice(0, 13) + "..." : ""}</p>
                     </div>

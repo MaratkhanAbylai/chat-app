@@ -1,33 +1,31 @@
-.search-container {
-    margin-top: 1rem;
+.friends-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 4rem;
+    margin-top: 1rem;
+}
+
+.container-search {
+    display: flex;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 2rem;
 }
 
-.results-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 5rem;
-}
-
-.result-user {
+.counter {
+    background-color: #141414;
+    color: #FFE800;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 0.5rem;
-}
-
-.avatar {
-    width: 8rem;
-    height: 8rem;
-    object-fit: cover;
-    border-radius: 10%;
+    border-radius: 1rem;
+    width: 10rem;
+    font-size: 1.7rem;
+    height: 5rem;
 }
 
 .input {
@@ -52,7 +50,32 @@
     0 0 40px rgba(166, 151, 0, 0.75);
 }
 
-.send-request {
+.friends-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.friend {
+    color: #141414;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #141414;
+    width: 15rem;
+    height: 15rem;
+}
+
+.avatar {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.friend button {
     background-color: #141414;
     border: none;
     color: #FFE800;
@@ -63,25 +86,25 @@
     transition: font-size 0.2s ease, color 0.5s ease, border-radius 0.5s ease;
 }
 
-.send-request:hover {
+.friend button:hover {
     color: #fff;
     font-size: 0.9rem;
     border-radius: 0;
 }
 
-.login, .sended-request {
-    font-size: 1.2rem;
-    color: #141414;
-    font-weight: bold;
-}
-
 /* ========================= */
 /* 📱 TABLET (≤1024px) */
 /* ========================= */
-@media (max-width: 1024px) {
-  .results-block {
+@media (max-width: 1290px) {
+  .friends-list {
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: 1.5rem;
+  }
+
+  .counter {
+    width: 9rem;
+    height: 4.5rem;
+    font-size: 1.5rem;
   }
 
   .avatar {
@@ -89,15 +112,8 @@
     height: 7rem;
   }
 
-  .send-request {
+  .friend button {
     width: 9rem;
-    height: 2rem;
-    font-size: 0.95rem;
-  }
-
-  .login,
-  .sended-request {
-    font-size: 1.1rem;
   }
 }
 
@@ -105,35 +121,39 @@
 /* 📱 MOBILE (≤768px) */
 /* ========================= */
 @media (max-width: 768px) {
-  .search-container {
-    gap: 1.5rem;
+  .friends-container {
+    gap: 3rem;
     padding: 0 1rem;
   }
 
-  .results-block {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .container-search {
+    gap: 1rem;
   }
 
-  .input {
-    max-width: 100%;
-    font-size: 15px;
+  .friends-list {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .counter {
+    width: 100%;
+    height: 4rem;
+    font-size: 1.4rem;
   }
 
   .avatar {
-    width: 10rem;
-    height: 10rem;
+    width: 6.5rem;
+    height: 6.5rem;
   }
 
-  .send-request {
+  .friend button {
+    width: 80%;
+    height: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .counter-search input {
     width: 100%;
-    height: 2.2rem;
-    font-size: 1rem;
-  }
-
-  .login,
-  .sended-request {
-    font-size: 1rem;
   }
 }
 
@@ -141,12 +161,13 @@
 /* 📱 SMALL MOBILE (≤480px) */
 /* ========================= */
 @media (max-width: 480px) {
+
   .avatar {
-    width: 7rem;
-    height: 7rem;
+    width: 6rem;
+    height: 6rem;
   }
 
-  .send-request {
-    font-size: 0.9rem;
+  .friend button {
+    font-size: 0.85rem;
   }
 }

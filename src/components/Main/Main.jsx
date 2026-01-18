@@ -12,6 +12,8 @@ function Main({ user, setUser, goToLogin }) {
   const [screen, setScreen] = useState("chats");
   const [activeChat, setActiveChat] = useState(null);
   const [prevScreen, setPrevScreen] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -48,22 +50,17 @@ function Main({ user, setUser, goToLogin }) {
       const response = await fetch("/api/avatar", {
         method: "POST",
         headers: {
-          Authorization: "Bearer " + user.token
+          Authorization: "Bearer " + user.token,
         },
-        body: formData
+        body: formData,
       });
-
-      if (!response.ok) {
-        throw new Error("Upload failed");
-      }
 
       const data = await response.json();
 
-      setUser(prev => ({
+      setUser((prev) => ({
         ...prev,
-        avatar: data.avatar
+        avatar: data.avatar,
       }));
-
     } catch (err) {
       console.error(err);
       alert("Не удалось загрузить аватар");
@@ -72,11 +69,11 @@ function Main({ user, setUser, goToLogin }) {
     e.target.value = null;
   };
 
-
   function openChat(companion) {
     setPrevScreen(screen);
     setActiveChat(companion);
     setScreen("chat");
+    setSidebarOpen(false);
   }
 
   function backToChats() {
@@ -90,9 +87,24 @@ function Main({ user, setUser, goToLogin }) {
     goToLogin();
   }
 
+  function go(screenName) {
+    setScreen(screenName);
+    setSidebarOpen(false);
+  }
+
   return (
     <div className={styles.container}>
-      <div className={styles.sidebar}>
+      {/* BURGER */}
+      <button className={styles.burger} onClick={() => setSidebarOpen(true)}>
+        ☰
+      </button>
+
+      {/* SIDEBAR */}
+      <aside
+        className={`${styles.sidebar} ${
+          sidebarOpen ? styles.open : ""
+        }`}
+      >
         <div className={styles["sidebar-user"]}>
           <img
             src={user.avatar || "/default-avatar.png"}
@@ -108,22 +120,14 @@ function Main({ user, setUser, goToLogin }) {
             style={{ display: "none" }}
           />
           <p className={styles.login}>{user.login}</p>
-        </div>  
+        </div>
 
         <div className={styles["sidebar-menu"]}>
           <ul>
-            <li>
-              <button onClick={() => setScreen("chats")}>Чаты</button>
-            </li>
-            <li>
-              <button onClick={() => setScreen("friends")}>Друзья</button>
-            </li>
-            <li>
-              <button onClick={() => setScreen("requests")}>Заявки</button>
-            </li>
-            <li>
-              <button onClick={() => setScreen("search")}>Поиск</button>
-            </li>
+            <li><button onClick={() => go("chats")}>Чаты</button></li>
+            <li><button onClick={() => go("friends")}>Друзья</button></li>
+            <li><button onClick={() => go("requests")}>Заявки</button></li>
+            <li><button onClick={() => go("search")}>Поиск</button></li>
             <li>
               <button className={styles["exit-btn"]} onClick={logout}>
                 Выйти
@@ -131,8 +135,17 @@ function Main({ user, setUser, goToLogin }) {
             </li>
           </ul>
         </div>
-      </div>
+      </aside>
 
+      {/* OVERLAY */}
+      {sidebarOpen && (
+        <div
+          className={styles.overlay}
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* MAIN */}
       <main className={styles.main}>
         {screen === "chats" && <Chats openChat={openChat} />}
         {screen === "friends" && <FriendsComponent openChat={openChat} />}

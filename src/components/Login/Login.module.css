@@ -1,8 +1,121 @@
 .login {
-    flex-direction: column;
-    gap: 1vw;
-    width: 100vw;
-    height: 100vh;
-    background-color: #300078;
-    color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #FFE800;
+  color: #fff;
+
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ===== Общие стили для элементов ===== */
+
+.login input {
+  width: 100%;
+  max-width: 400px;
+
+  padding: 12px 14px;
+  font-size: 16px;
+
+  border-radius: 8px;
+  border: none;
+  outline: none;
+
+
+  transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.login input:focus {
+  box-shadow:
+    0 0 0 2px rgba(166, 151, 0, 0.65),   /* тонкий контур */
+    0 8px 24px rgba(166, 151, 0, 0.65), /* мягкая тень */
+    0 0 40px rgba(166, 151, 0, 0.75);
+}
+
+.login button {
+  width: 100%;
+  max-width: 400px;
+
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+
+  background-color: #ffffff;
+  color: #300078;
+
+  transition: opacity 0.2s ease, transform 0.1s ease, background-color 0.3s ease, color 0.05s ease;
+}
+
+.login button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login button:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+.login button:hover {
+    background-color: #530FAD;
+    color: #FFEE40;
+}
+
+.login p {
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+  max-width: 400px;
+}
+
+/* ========================= */
+/* 📱 Mobile (по умолчанию) */
+/* ========================= */
+/* Всё уже оптимизировано под мобилку */
+
+/* ========================= */
+/* 📱➡️📱 Tablet */
+/* ========================= */
+@media (min-width: 768px) {
+  .login {
+    gap: 20px;
+  }
+
+  .login input,
+  .login button {
+    max-width: 360px;
+  }
+
+  .login p {
+    font-size: 15px;
+  }
+}
+
+/* ========================= */
+/* 🖥️ Desktop */
+/* ========================= */
+@media (min-width: 1024px) {
+  .login {
+    gap: 24px;
+  }
+
+  .login input,
+  .login button {
+    max-width: 420px;
+    font-size: 17px;
+  }
+
+  .login p {
+    font-size: 16px;
+  }
 }

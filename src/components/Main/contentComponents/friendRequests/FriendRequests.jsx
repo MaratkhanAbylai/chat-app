@@ -6,7 +6,11 @@ function FriendRequests() {
     const [requests, setRequests] = useState([
         {id: 1, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
         {id: 2, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
-        {id: 3, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'}
+        {id: 3, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
+        {id: 4, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
+        {id: 5, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
+        {id: 6, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
+        {id: 7, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'}
     ]);
     const [renderLoading, setRenderLoading] = useState(false);
 
@@ -108,20 +112,16 @@ function FriendRequests() {
 
             {renderLoading && 'Загрузка...'}
 
-            {!renderLoading && requests.length > 0 && <p className={classes['requests-number']}>
-                {requests.length} заявок в друзья
+            {!renderLoading && <p className={classes['requests-number']}>
+                Заявок: {requests.length}
             </p>}
 
-            {!renderLoading && requests.length === 0 && <p className={classes['requests-number']}>
-                Нет заявок в друзья
-            </p>}
-
-            <div className="requests-list">
+            <div className={classes['requests-list']}>
                 {requests.map(user => (
                     <div className="request" key={user.id}>
                         <img className={classes.avatar} src={user.avatar || 'default.png'} alt="user's avatar" />
-                        <p className="login">{user.login}</p>
-                        <div className="btns">
+                        <p className={classes.login}>{user.login}</p>
+                        <div className={classes.btns}>
                             <button onClick={() => acceptFriend(user.id)}>{acceptLoading === user.id ? 'Принятие запроса...' : 'Принять запрос'}</button>
                             <button onClick={() => rejectRequest(user.id)}>{rejectLoading === user.id ? 'Отклонение...' : 'Отклонить запрос'}</button>
                         </div>

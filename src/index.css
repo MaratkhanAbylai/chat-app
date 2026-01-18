@@ -16,3 +16,7 @@ body {
     background: #0f0f1a;
     color: white;
 }
+
+p {
+    font-weight: bold;
+}

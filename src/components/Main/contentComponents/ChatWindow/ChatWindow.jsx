@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import './ChatWindow.css'
+import classes from './ChatWindow.module.css'
 
 function ChatWindow({ companion, back }) {
 
@@ -49,29 +49,38 @@ function ChatWindow({ companion, back }) {
 
     return <>
 
-        <div className="chat-window">
+        <div className={classes["chat-window"]}>
 
-            <div className="header">
-                <button onClick={back}>←</button>
+            <div className={classes.header}>
+                <button className={classes['back-btn']} onClick={back}>←</button>
                 <img src={companion.avatar} alt="" />
                 <p>{companion.login}</p>
             </div>
 
-            <div className="chat-messages">
-                <p className="companion-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
-                <p className="my-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
-                <p className="companion-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
-                <p className="my-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p> 
-                <p className="companion-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
-                <p className="my-msg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+            <div className={classes["chat-messages"]}>
+                <p className={classes["companion-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className={classes["my-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
+                <p className={classes["companion-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className={classes["my-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
+                <p className={classes["companion-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className={classes["my-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
+                <p className={classes["companion-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className={classes["my-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
+                <p className={classes["companion-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className={classes["my-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
+                <p className={classes["companion-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className={classes["my-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
+                <p className={classes["companion-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>        
+                <p className={classes["my-msg"]}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, quaerat.</p>
             </div>
 
-            <div className="chat-input">
-                <input type="text" 
+            <div className={classes["chat-input"]}>
+                <input type="text" className={classes.input}
                  value={inputValue}
                  onChange={e => setInputValue(e.target.value)}
+                 placeholder="Введите сообщение"
                 />
-                <button onClick={sendMsg}>Send</button>
+                <button className={classes["send-btn"]} onClick={sendMsg}><img src="../../../../../pictures/icons/send-msg-icon.png" alt="send-icon" className={classes["send-icon"]} /></button>
             </div>
 
         </div>

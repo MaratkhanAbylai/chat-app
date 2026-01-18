@@ -8,11 +8,130 @@
 }
 
 .requests-number {
+    color: #141414;
     font-size: 2rem;
+}
+
+.requests-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5rem;
 }
 
 .avatar {
     width: 10rem;
     height: 10rem;
     object-fit: cover;
+    border-radius: 1rem;
+}
+
+.login {
+    font-size: 1.5rem;
+    color: #141414;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.btns button {
+    background-color: #141414;
+    border: none;
+    color: #FFE800;
+    width: 10rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: font-size 0.2s ease, color 0.5s ease, border-radius 0.5s ease;
+    font-size: 1rem;
+}
+
+.btns button:hover {
+    color: #fff;
+    font-size: 0.9rem;
+    border-radius: 0;
+}
+
+/* ========================= */
+/* 📱 TABLET (≤1024px) */
+/* ========================= */
+@media (max-width: 1024px) {
+  .requests-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .avatar {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .login {
+    font-size: 1.4rem;
+  }
+
+  .btns button {
+    width: 9rem;
+    height: 2rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* ========================= */
+/* 📱 MOBILE (≤768px) */
+/* ========================= */
+@media (max-width: 768px) {
+  .requests-container {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .requests-list {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .requests-number {
+    font-size: 1.7rem;
+  }
+
+  .avatar {
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .login {
+    font-size: 1.2rem;
+  }
+
+  .btns {
+    width: 100%;
+  }
+
+  .btns button {
+    width: 100%;
+    height: 2.2rem;
+    font-size: 1rem;
+  }
+}
+
+/* ========================= */
+/* 📱 SMALL MOBILE (≤480px) */
+/* ========================= */
+@media (max-width: 480px) {
+  .avatar {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .login {
+    font-size: 1.5rem;
+  }
+
+  .btns button {
+    font-size: 1rem;
+    padding: 5px;
+  }
 }
