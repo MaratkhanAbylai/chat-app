@@ -47,7 +47,7 @@ function Main({ user, setUser, goToLogin }) {
       const formData = new FormData();
       formData.append("avatar", file);
 
-      const response = await fetch("/api/avatar", {
+      const response = await fetch("http://localhost:8000/api/avatar.php", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + user.token,

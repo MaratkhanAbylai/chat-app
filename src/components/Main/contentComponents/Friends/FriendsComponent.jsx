@@ -2,13 +2,7 @@ import { useState, useEffect } from "react";
 import classes from "./FriendsComponent.module.css";
 
 function FriendsComponent({ openChat }) {
-  const [friendsList, setFriendsList] = useState([
-    {id: 1, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
-    {id: 2, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
-    {id: 3, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'},
-    {id: 3, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Mara'},
-    {id: 3, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuzUgSb2fX-EQP7_OpZ7RMZ1SAZH25L7-DHRrqcBhPrmcISicfKdI7BA00CZ7T-V5h1MPo4uj5UnuYZ_ZKsHqbtGQR51DfGBF2qS7uiA&s=10', login: 'Cold'}
-  ]);
+  const [friendsList, setFriendsList] = useState([]);
   const [searchList, setSearchList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
@@ -20,7 +14,7 @@ function FriendsComponent({ openChat }) {
   /* ===== ЗАГРУЗКА ВСЕХ ДРУЗЕЙ ===== */
   async function fetchFriends() {
     try {
-      const response = await fetch("/api/friends", {
+      const response = await fetch("http://localhost:8000/api/friends", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -43,7 +37,7 @@ function FriendsComponent({ openChat }) {
     try {
       setSearchLoading(true);
 
-      const response = await fetch("/api/friends/", {
+      const response = await fetch("/api/friends", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

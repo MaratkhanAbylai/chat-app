@@ -26,7 +26,7 @@ function FriendRequests() {
 
         setRenderLoading(true);
 
-        fetch('/api/requests/', {
+        fetch('http://localhost:8000/pending_friend.php', {
             headers: {
                 Authorization: 'Bearer ' + token
             }
@@ -37,7 +37,7 @@ function FriendRequests() {
             return res.json();
 
         })
-        .then(data => setRequests(data))
+        .then(data => setRequests(data.requests))
         .catch(err => {
             console.error(err);
             alert(err.message);
@@ -52,18 +52,18 @@ function FriendRequests() {
 
             setAcceptLoading(id);
 
-            const response = await fetch('/api/accept', {
+            const response = await fetch('http://localhost:8000/accept_friend.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + token
                 },
                 body: JSON.stringify({
-                    to: id  // Id пользователя заявку которого приняли
+                    request_id: id  // Id пользователя заявку которого приняли
                 })
             });
 
-            if(!response.ok) throw new Error('Произошла ошибка при принятие запроса');
+            if(!response.ok) throw new Error('Произошла ошибка при принятии запроса');
 
             setRequests(prev => prev.filter(request => request.id !== id));
 
@@ -82,14 +82,14 @@ function FriendRequests() {
 
             setRejectLoading(id);
 
-            const response = await fetch('/api/rejected/', {
+            const response = await fetch('http://localhost:8000/reject_friend.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + token
                 },
                 body: JSON.stringify({
-                    to: id  // Id пользователя запрос которого был отклонен
+                    request_id: id
                 })
             });
 
