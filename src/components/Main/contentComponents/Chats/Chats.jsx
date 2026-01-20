@@ -11,12 +11,25 @@ function Chats({ openChat }) {
         {id: 4, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole', lastMessage: 'Hello, how are you?'}
     ]);
 
-    useEffect(() => {
-        fetch('/api/chats/')
+  useEffect(() => {
+    fetch('http://localhost:8000/api/chats/list2.php', {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    })
         .then(res => res.json())
-        .then(data => setComponions(data))
+        .then(data => {
+            // бэк возвращает { status, chats }
+            const chats = data.chats.map(chat => ({
+                id: chat.conversation_id,
+                avatar: chat.peer_avatar,
+                login: chat.peer_login,
+                lastMessage: chat.last_message
+            }));
+            setComponions(chats);
+        })
         .catch(err => console.error(err));
-    }, []);
+}, []);
 
     return <>
 

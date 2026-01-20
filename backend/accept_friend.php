@@ -24,6 +24,12 @@ $stmt = $pdo->prepare("
 $stmt->execute([$requestId, $user['id']]);
 $req = $stmt->fetch();
 
+error_log("accept: request_id=$requestId, me=".$user['id']);
+
+$debug = $pdo->prepare("SELECT id, from_user, to_user, status FROM friend_requests WHERE id = ?");
+$debug->execute([$requestId]);
+error_log("row=".json_encode($debug->fetch(PDO::FETCH_ASSOC)));
+
 if (!$req) {
     http_response_code(403);
     echo json_encode(["error" => "Forbidden"]);
@@ -35,14 +41,15 @@ $pdo->prepare("
     UPDATE friend_requests SET status = 'accepted' WHERE id = ?
 ")->execute([$requestId]);
 
-/* Добавляем в friends */
+/* Добавляем в friends (нормализованная пара) */
+$from = (int)$req['from_user'];
+$to   = (int)$user['id'];
+
 $pdo->prepare("
-    INSERT INTO friends (user_id, friend_id)
-    VALUES (?, ?), (?, ?)
-")->execute([
-    $user['id'], $req['from_user'],
-    $req['from_user'], $user['id']
-]);
+    INSERT IGNORE INTO friends (user1, user2)
+    VALUES (LEAST(?, ?), GREATEST(?, ?))
+")->execute([$from, $to, $from, $to]);
+
 
 echo json_encode(["status" => "success"]);
 exit;

@@ -14,7 +14,7 @@ function FriendsComponent({ openChat }) {
   /* ===== ЗАГРУЗКА ВСЕХ ДРУЗЕЙ ===== */
   async function fetchFriends() {
     try {
-      const response = await fetch("http://localhost:8000/api/friends", {
+      const response = await fetch("http://localhost:8000/api/friends/list.php", {
         headers: {
           Authorization: "Bearer " + token,
         },
