@@ -4,12 +4,7 @@ import './Chats.css'
 
 function Chats({ openChat }) {
 
-    const[companions, setComponions] = useState([
-        {id: 1, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole1', lastMessage: 'Hello, how are you?'},
-        {id: 2, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole2', lastMessage: 'Hello, how are you?'},
-        {id: 3, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole3', lastMessage: 'Hello, how are you?'},
-        {id: 4, avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKu9gyKioTsKU645nZ-POLW2ZfrmPPdbuFIAH_14PjViMvHyP1TsLjd2VcFnGahOzJdFLDPVPclEkow-wrnI46DrlMEUV5CYS6lN6FK64r&s=10', login: 'cole', lastMessage: 'Hello, how are you?'}
-    ]);
+    const[companions, setComponions] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8000/api/chats/list2.php', {

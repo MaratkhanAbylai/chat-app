@@ -152,7 +152,7 @@ function Main({ user, setUser, goToLogin }) {
         {screen === "requests" && <FriendRequests />}
         {screen === "search" && <Search user={user} />}
         {screen === "chat" && (
-          <ChatWindow companion={activeChat} back={backToChats} />
+          <ChatWindow companion={activeChat} back={backToChats} ser={user} />
         )}
       </main>
     </div>

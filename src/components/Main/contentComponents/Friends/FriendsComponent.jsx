@@ -94,13 +94,13 @@ function FriendsComponent({ openChat }) {
     try {
       setLoadingId(id);
 
-      const response = await fetch("/api/friends/remove", {
+      const response = await fetch("http://localhost:8000/api/friends/remove.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
         },
-        body: JSON.stringify({ friendId: id }),
+        body: JSON.stringify({ user_id: id }),
       });
 
       const res = await response.json();
